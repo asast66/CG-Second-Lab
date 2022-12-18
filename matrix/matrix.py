@@ -10,9 +10,14 @@ class MatrixError(Exception):
 class Matrix:
 
     def __init__(self, matrix_data: List[List[float]]):
-        self.__line_num = len(matrix_data)
-        self.__column_num = len(matrix_data[0])
-        self.__matrix_data = matrix_data
+        if len(matrix_data) != 0:
+            self.__line_num = len(matrix_data)
+            self.__column_num = len(matrix_data[0])
+            self.__matrix_data = matrix_data
+        else:
+            self.__line_num = 0
+            self.__column_num = 0
+            self.__matrix_data = []
 
     def get_column_num(self) -> int:
         return self.__column_num
