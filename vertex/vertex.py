@@ -1,8 +1,10 @@
+from typing import List
+
+
 class Vertex2D:
 
-    def __init__(self, x: float, y: float):
-        self.__x = x
-        self.__y = y
+    def __init__(self, vertex_data: List[float]):
+        self.__x, self.__y = vertex_data
 
     def set_x(self, x: float) -> "Vertex2D":
         self.__x = x
@@ -21,10 +23,8 @@ class Vertex2D:
 
 class Vertex3D:
 
-    def __init__(self, x: float, y: float, z: float):
-        self.__x = x
-        self.__y = y
-        self.__z = z
+    def __init__(self, vertex_data: List[float]):
+        self.__x, self.__y, self.__z = vertex_data
 
     def set_x(self, x: float) -> "Vertex3D":
         self.__x = x
