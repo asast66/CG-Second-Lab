@@ -1,8 +1,8 @@
 from camera.camera import Camera
 from matrix.matrix import Matrix
+from matrix.vector import Vector
 from model.model import Model3D
 from scene.scene import Scene
-from vertex.vertex import HomogeneousVertex
 
 
 def main():
@@ -16,10 +16,9 @@ def main():
         [-2, 2, -2],
         [-2, 2, 2]
     ]
-    homogeneous_vertices = [HomogeneousVertex(vertex) for vertex in vertices]
     adjacency_matrix = Matrix([
         [0, 1, 0, 1, 1, 0, 0, 0],
-        [1, 0, 1, 0, 1, 0, 0, 0],
+        [1, 0, 1, 0, 0, 1, 0, 0],
         [0, 1, 0, 1, 0, 0, 1, 0],
         [1, 0, 1, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 1, 0, 1],
@@ -27,11 +26,13 @@ def main():
         [0, 0, 1, 0, 0, 1, 0, 1],
         [0, 0, 0, 1, 1, 0, 1, 0],
     ])
-    model = Model3D(vertices=homogeneous_vertices,
-                    adjacency_matrix=adjacency_matrix)
+    model1 = Model3D(vertices=vertices,
+                     adjacency_matrix=adjacency_matrix)
     camera = Camera()
+    camera.translate(Vector([0, -1, 0]))
+    camera.rotate(Vector([0, 0.1, 0]))
     scene = Scene(camera=camera,
-                  model=model)
+                  models=[model1])
     scene.show()
 
 
