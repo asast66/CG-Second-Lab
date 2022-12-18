@@ -101,14 +101,24 @@ class Matrix:
                               left_line[3] * vertex.get_h())
         return HomogeneousVertex(new_vertex)
 
+    def __multiply_by_list(self, vertex: List[float]):
+        new_vertex = []
+        for left_line in self.__matrix_data:
+            new_vertex.append(left_line[0] * vertex[0] +
+                              left_line[1] * vertex[1] +
+                              left_line[2] * vertex[2])
+        return new_vertex
+
     # Умножение матрицы на матрицу, или умножение на числовую константу
-    def __mul__(self, other: Union["Matrix", float, int, HomogeneousVertex]) -> Union["Matrix", HomogeneousVertex]:
+    def __mul__(self, other: Union["Matrix", float, int, HomogeneousVertex, List[float]]) -> Union["Matrix", HomogeneousVertex, List[float]]:
         if isinstance(other, float) or isinstance(other, int):
             return self.__multiply_by_const(other)
         elif isinstance(other, Matrix):
             return self.__multiply_by_matrix(other)
         elif isinstance(other, HomogeneousVertex):
             return self.__multiply_by_homogeneous_vertex(other)
+        elif isinstance(other, list):
+            return self.__multiply_by_list(other)
         else:
             raise MatrixError
 

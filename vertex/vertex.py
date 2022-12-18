@@ -62,21 +62,18 @@ class HomogeneousVertex:
         self.__x = x
 
     def get_x(self) -> float:
-        # return self.__x / self.__h
         return self.__x
 
     def set_y(self, y: float):
         self.__y = y
 
     def get_y(self) -> float:
-        # return self.__y / self.__h
         return self.__y
 
     def set_z(self, z: float):
         self.__z = z
 
     def get_z(self) -> float:
-        # return self.__z / self.__h
         return self.__z
 
     def set_h(self, h: Union[int, float]):
@@ -84,6 +81,11 @@ class HomogeneousVertex:
 
     def get_h(self) -> Union[int, float]:
         return self.__h
+
+    def revert(self) -> List[float]:
+        return [self.__x / self.__h,
+                self.__y / self.__h,
+                self.__z / self.__h]
 
     def __repr__(self):
         return f"|{self.__x} {self.__y} {self.__z} {self.__h}|"
