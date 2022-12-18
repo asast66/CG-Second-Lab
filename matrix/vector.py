@@ -33,10 +33,15 @@ class Vector:
         return sqrt(self.__x ** 2 + self.__y ** 2 + self.__z ** 2)
 
     # Векторное произведение
-    def __mul__(self, other) -> "Vector":
+    def __mul__(self, other: Union["Vector", float]) -> "Vector":
         if isinstance(other, Vector):
             return Vector([self.get_y() * other.get_z() - self.get_z() * other.get_y(),
                            self.get_z() * other.get_x() - self.get_x() * other.get_z(),
                            self.get_x() * other.get_y() - self.get_y() * other.get_x()])
+        elif isinstance(other, float):
+            return Vector([self.__x * other, self.__y * other, self.__z * other])
         else:
             raise ValueError
+
+    def __repr__(self):
+        return f"|{self.__x} {self.__y} {self.__z}|"

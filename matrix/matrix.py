@@ -135,6 +135,11 @@ class Matrix:
         except ZeroDivisionError as exc:
             raise exc
 
+    # Оператор сравнения "!="
+    def __ne__(self, other: int):
+        if isinstance(other, int):
+            return True
+
     def __str__(self):
         str_matrix = f"|"
         for line in self.__matrix_data:
