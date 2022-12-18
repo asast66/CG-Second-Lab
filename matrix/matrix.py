@@ -1,5 +1,7 @@
 from typing import List, Union
 
+from vertex.vertex import HomogeneousVertex
+
 
 class MatrixError(Exception):
 
@@ -15,9 +17,14 @@ class Matrix:
             self.__column_num = len(matrix_data[0])
             self.__matrix_data = matrix_data
         else:
-            self.__line_num = 0
-            self.__column_num = 0
-            self.__matrix_data = []
+            self.__line_num = 4
+            self.__column_num = 4
+            self.__matrix_data = [
+                [1, 0, 0, 0],
+                [0, 1, 0, 0],
+                [0, 0, 1, 0],
+                [0, 0, 0, 1]
+            ]
 
     def get_column_num(self) -> int:
         return self.__column_num
@@ -85,12 +92,23 @@ class Matrix:
             raise MatrixError("Last dimension of left matrix is not the same size as "
                               "the second-to-last dimension of right matrix.")
 
+    def __multiply_by_homogeneous_vertex(self, vertex: HomogeneousVertex) -> HomogeneousVertex:
+        new_vertex = []
+        for left_line in self.__matrix_data:
+            new_vertex.append(left_line[0] * vertex.get_x() +
+                              left_line[1] * vertex.get_y() +
+                              left_line[2] * vertex.get_z() +
+                              left_line[3] * vertex.get_h())
+        return HomogeneousVertex(new_vertex)
+
     # Умножение матрицы на матрицу, или умножение на числовую константу
-    def __mul__(self, other: Union["Matrix", float, int]) -> "Matrix":
+    def __mul__(self, other: Union["Matrix", float, int, HomogeneousVertex]) -> Union["Matrix", HomogeneousVertex]:
         if isinstance(other, float) or isinstance(other, int):
             return self.__multiply_by_const(other)
         elif isinstance(other, Matrix):
             return self.__multiply_by_matrix(other)
+        elif isinstance(other, HomogeneousVertex):
+            return self.__multiply_by_homogeneous_vertex(other)
         else:
             raise MatrixError
 
