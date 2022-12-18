@@ -1,8 +1,9 @@
 from camera.camera import Camera
+from common.colors import Colors
 from matrix.matrix import Matrix
 from matrix.vector import Vector
 from model.model import Model3D
-from scene.scene import Scene
+from scene.scene import Scene, ProjectionType
 
 
 def main():
@@ -27,12 +28,14 @@ def main():
         [0, 0, 0, 1, 1, 0, 1, 0],
     ])
     model1 = Model3D(vertices=vertices,
-                     adjacency_matrix=adjacency_matrix)
-    camera = Camera()
-    camera.translate(Vector([0, -1, 0]))
-    camera.rotate(Vector([0, 0.1, 0]))
+                     adjacency_matrix=adjacency_matrix,
+                     edges_color=Colors.DARK_WHITE)
+    camera = Camera(L=-9, R=9, B=-7, T=7, F=7, D=5)
+    camera.translate(Vector([0, 0, 0]))
+    camera.rotate(Vector([-0.3, 0.3, 0.3]))
     scene = Scene(camera=camera,
-                  models=[model1])
+                  models=[model1],
+                  projection_type=ProjectionType.ORTHOGONAL)
     scene.show()
 
 

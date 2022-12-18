@@ -87,7 +87,14 @@ class Camera:
             [0, 0,  1]
         ])
 
-    def get_view_to_projected_matrix(self) -> Matrix:
+    def get_view_to_orthogonal_projected_matrix(self) -> Matrix:
+        return Matrix([
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 0, 1]
+        ])
+
+    def get_view_to_perspective_projected_matrix(self) -> Matrix:
         return Matrix([
             [1, 0, 0, 0],
             [0, 1, 0, 0],
@@ -109,5 +116,5 @@ class Camera:
     def scale(self, scale_vector: Vector):
         self.__view_matrix = self.get_scaling_matrix(scale_vector) * self.__view_matrix
 
-    def resize_camera_screen(self):
-        pass
+    # def resize_camera_screen(self):
+    #     pass
