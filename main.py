@@ -1,7 +1,8 @@
+from math import pi
+
 from camera.camera import Camera
 from common.colors import Colors
 from matrix.matrix import Matrix
-from matrix.vector import Vector
 from model.model import Model3D
 from scene.scene import Scene, ProjectionType
 
@@ -29,13 +30,14 @@ def main():
     ])
     model1 = Model3D(vertices=vertices,
                      adjacency_matrix=adjacency_matrix,
-                     edges_color=Colors.DARK_WHITE)
-    camera = Camera(L=-9, R=9, B=-7, T=7, F=7, D=5)
-    camera.translate(Vector([0, 0, 0]))
-    camera.rotate(Vector([-0.3, 0.3, 0.3]))
+                     edges_color=Colors.DARK_WHITE,
+                     edges_width=2)
+    camera = Camera(L=-9, R=9, B=-7, T=7, F=10, D=10)
+    camera.translate([2, 0.5, 2])
+    camera.rotate([-pi / 10, pi / 4, 0])
     scene = Scene(camera=camera,
                   models=[model1],
-                  projection_type=ProjectionType.ORTHOGONAL)
+                  projection_type=ProjectionType.PERSPECTIVE)
     scene.show()
 
 
