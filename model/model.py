@@ -6,11 +6,12 @@ from vertex.vertex import HomogeneousVertex
 
 class Model3D:
 
-    def __init__(self, vertices: List[List[float]], adjacency_matrix: Matrix, edges_color: Tuple[int, int, int]):
+    def __init__(self, vertices: List[List[float]], adjacency_matrix: Matrix, edges_color: Tuple[int, int, int],
+                 edges_width: int):
         self.__vertices = vertices
         self.__adjacency_matrix = adjacency_matrix
         self.__edges_color = edges_color
-        self.__accumulated_affine_transform_matrix = Matrix([])
+        self.__edges_width = edges_width
 
     def set_vertices(self, vertices: Matrix):
         self.__vertices = vertices
@@ -26,6 +27,9 @@ class Model3D:
 
     def get_edges_color(self) -> Tuple[int, int, int]:
         return self.__edges_color
+
+    def get_edges_width(self) -> int:
+        return self.__edges_width
 
     def apply_transform(self, transformation_matrix: Matrix) -> List[List[float]]:
         new_vertices = []

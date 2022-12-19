@@ -27,29 +27,29 @@ class Camera:
     def get_H(self) -> int:
         return self.__H
 
-    def get_X_rotation_matrix(self, angle) -> Matrix:
+    def get_X_rotation_matrix(self, angle: float) -> Matrix:
         return Matrix([
             [1, 0, 0, 0],
             [0, cos(angle), -sin(angle), 0],
             [0, sin(angle), cos(angle), 0],
             [0, 0, 0, 1]
-        ]) * self.__view_matrix
+        ])
 
-    def get_Y_rotation_matrix(self, angle) -> Matrix:
+    def get_Y_rotation_matrix(self, angle: float) -> Matrix:
         return Matrix([
             [cos(angle), 0, sin(angle), 0],
             [0, 1, 0, 0],
             [-sin(angle), 0, cos(angle), 0],
             [0, 0, 0, 1]
-        ]) * self.__view_matrix
+        ])
 
-    def get_Z_rotation_matrix(self, angle) -> Matrix:
+    def get_Z_rotation_matrix(self, angle: float) -> Matrix:
         return Matrix([
             [cos(angle), -sin(angle), 0, 0],
             [sin(angle), cos(angle), 0, 0],
             [0, 0, 1, 0],
             [0, 0, 0, 1]
-        ]) * self.__view_matrix
+        ])
 
     def get_scaling_matrix(self, scale_vector: Vector) -> Matrix:
         return Matrix([
@@ -59,13 +59,13 @@ class Camera:
             [0, 0, 0, 1]
         ]) * self.__view_matrix
 
-    def get_translate_matrix(self, translate_vector: Vector) -> Matrix:
+    def get_translate_matrix(self, translate_vector: List[float]) -> Matrix:
         return Matrix([
-            [1, 0, 0, translate_vector.get_x()],
-            [0, 1, 0, translate_vector.get_y()],
-            [0, 0, 1, translate_vector.get_z()],
+            [1, 0, 0, translate_vector[0]],
+            [0, 1, 0, translate_vector[1]],
+            [0, 0, 1, translate_vector[2]],
             [0, 0, 0, 1]
-        ]) * self.__view_matrix
+        ])
 
     def get_world_to_view_matrix(self) -> Matrix:
         # Просто преобразование геометрии, чтобы она смотрела в камеру => набор аффинных преобразований
@@ -105,13 +105,14 @@ class Camera:
         return [(vertex[0] - self.__L) / (self.__R - self.__L) * self.__W,
                 (self.__T - vertex[1]) / (self.__T - self.__B) * self.__H]
 
-    def translate(self, translate_vector: Vector):
+    def translate(self, translate_vector: List[float]):
         self.__view_matrix = self.get_translate_matrix(translate_vector) * self.__view_matrix
 
-    def rotate(self, rotate_vector: Vector):
-        self.__view_matrix = self.get_X_rotation_matrix(-rotate_vector.get_x()) * \
-                             self.get_Y_rotation_matrix(-rotate_vector.get_y()) * \
-                             self.get_Z_rotation_matrix(-rotate_vector.get_z()) * self.__view_matrix
+    def rotate(self, rotate_vector: List[float]):
+        rotation_matrix = (self.get_Z_rotation_matrix(-rotate_vector[2]) *
+                           self.get_Y_rotation_matrix(-rotate_vector[1]) *
+                           self.get_X_rotation_matrix(-rotate_vector[0]))
+        self.__view_matrix = rotation_matrix * self.__view_matrix
 
     def scale(self, scale_vector: Vector):
         self.__view_matrix = self.get_scaling_matrix(scale_vector) * self.__view_matrix
