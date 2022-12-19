@@ -1,7 +1,7 @@
 from math import sin, cos
 from typing import Union, List
 
-from matrix.matrix import Matrix
+from common.matrix import Matrix
 from matrix.vector import Vector
 
 

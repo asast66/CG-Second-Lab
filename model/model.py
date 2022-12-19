@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-from matrix.matrix import Matrix
+from common.matrix import Matrix
 from vertex.vertex import HomogeneousVertex
 
 

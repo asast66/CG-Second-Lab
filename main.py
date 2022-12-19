@@ -2,7 +2,7 @@ from math import pi
 
 from camera.camera import Camera
 from common.colors import Colors
-from matrix.matrix import Matrix
+from common.matrix import Matrix
 from model.model import Model3D
 from scene.scene import Scene, ProjectionType
 
@@ -39,6 +39,13 @@ def main():
                   models=[model1],
                   projection_type=ProjectionType.PERSPECTIVE)
     scene.show()
+
+    # TODO:
+    #  1. Добавить скейлинг при прокрутке мыши
+    #  2. Добавить отрисовку осей координат в сцене
+    #  3. (Добавить составные АП, но не факт что это нужно)
+    #  4. Отрефакторить код классов Matrix и Vector, возможно удалить точки и вектор
+    #  5. Перенести matrix.py в common.py
 
 
 if __name__ == "__main__":
